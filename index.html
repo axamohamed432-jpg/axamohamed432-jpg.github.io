@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rwej - روج | حلول رقمية للمحلات والمشاريع</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-main: #0b132b;
+            --bg-surface: #1c2541;
+            --bg-card: #222e50;
+            --primary: #3a86ff;
+            --primary-glow: rgba(58, 134, 255, 0.4);
+            --accent: #00f5d4;
+            --accent-glow: rgba(0, 245, 212, 0.3);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* توهج الخلفية الإبداعي المتحرك */
+        .bg-glows {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .glow-1 {
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(58,134,255,0.15) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+        }
+        .glow-2 {
+            position: absolute;
+            top: 40%;
+            right: -10%;
+            width: 45vw;
+            height: 45vw;
+            background: radial-gradient(circle, rgba(0,245,212,0.1) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+        }
+
+        /* هيدر التنقل العصري */
+        header {
+            background: rgba(28, 37, 65, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 15px 8%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        .logo span {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* واجهة الـ Hero الخرافية */
+        .hero {
+            padding: 170px 5% 80px 5%;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-badge {
+            background: rgba(58, 134, 255, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--accent);
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 900;
+            line-height: 1.3;
+            margin-bottom: 25px;
+            color: #fff;
+        }
+        .hero h1 span {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto 40px auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #1d4ed8);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(58, 134, 255, 0.4);
+        }
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 25px rgba(58, 134, 255, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.03);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        /* بنر التميز البصري الأحمر الصادم */
+        .banner-section {
+            background: linear-gradient(135deg, #7f1d1d, #450a0a);
+            padding: 45px 5%;
+            text-align: center;
+            border-top: 2px solid #ef4444;
+            border-bottom: 2px solid #ef4444;
+            margin: 40px 0;
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.2);
+        }
+        .banner-container h2 {
+            font-size: 2.6rem;
+            color: #fff;
+            font-weight: 900;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+        }
+        .banner-container p {
+            font-size: 1.3rem;
+            color: #fca5a5;
+            font-weight: 600;
+        }
+
+        /* شبكة الخدمات والأثمنة الاحترافية */
+        .services-section {
+            padding: 80px 8%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .section-header h2 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--bg-surface);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 24px;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(58, 134, 255, 0.25);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        /* تمييز كارت الإعلانات الاحترافي كلون خاص */
+        .service-card.highlighted {
+            border: 1px solid rgba(0, 245, 212, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 245, 212, 0.05);
+        }
+
+        .card-icon {
+            width: 65px;
+            height: 65px;
+            background: rgba(58, 134, 255, 0.08);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+            color: var(--accent);
+            margin-bottom: 25px;
+            transition: transform 0.3s;
+        }
+        .service-card:hover .card-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: rgba(0, 245, 212, 0.12);
+            color: #fff;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            flex-grow: 1;
+        }
+
+        .price-box {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .price-title {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .price-amount {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+        .price-amount span {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-right: 3px;
+        }
+
+        /* الفوتر المتناسق */
+        footer {
+            background: #060b18;
+            padding: 50px 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+        }
+        .footer-socials {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .social-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.3rem;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .social-icon:hover {
+            background: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 5px 15px var(--primary-glow);
+        }
+        .social-icon.insta:hover {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+
+        /* الزر العائم للواتساب بتأثير النبض الرادار */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background-color: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 32px;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1) rotate(8deg);
+            background-color: #20ba5a;
+        }
+        .whatsapp-float .radar-pulse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #25d366;
+            opacity: 0.4;
+            z-index: -1;
+            animation: radar 1.6s infinite;
+        }
+
+        @keyframes radar {
+            0% { transform: scale(1); opacity: 0.4; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+
+        /* استجابة الشاشات الصغيرة للهواتف */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.3rem; }
+            .nav-links { display: none; }
+            .banner-container h2 { font-size: 1.9rem; }
+            .services-section { padding: 60px 4%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glows">
+        <div class="glow-1"></div>
+        <div class="glow-2"></div>
+    </div>
+
+    <header>
+        <a href="#" class="logo">🚀 <span>Rwej.ma</span></a>
+        <ul class="nav-links">
+            <li><a href="#services">خدماتنا الرقمية</a></li>
+            <li><a href="https://www.instagram.com/rwej.ma?igsh=MXNtOGFtZjZuMHZraQ==" target="_blank">إنستغرام</a></li>
+            <li><a href="https://wa.me/212681127369" target="_blank">اتصل بنا مباشر</a></li>
+        </ul>
+    </header>
+
+    <section class="hero">
+        <div class="hero-badge">
+            ✨ حلول ويب وإعلانات ممولة تضمن لك تدفق الزبناء يومياً
+        </div>
+        <h1>انقل مشروعك وتجارتك إلى<br><span>العصر الرقمي الجديد</span></h1>
+        <p>نحن نكفيك عناء الإجابة اليومية على تساؤلات الزبناء المتكررة عبر صناعة واجهات ويب ذكية، مع إطلاق حملات إعلانية ممولة ومستهدفة تجلب لك طلبيات مباشرة ومبيعات حقيقية!</p>
+        <div class="cta-buttons">
+            <a href="https://wa.me/212681127369" class="btn btn-primary" target="_blank">
+                <i class="fa-brands fa-whatsapp"></i> اطلب مشروعك الرقمي الآن
+            </a>
+            <a href="#services" class="btn btn-secondary">تصفح العروض والأثمنة</a>
+        </div>
+    </section>
+
+    <section class="banner-section">
+        <div class="banner-container">
+            <h2>🛑 STOP AU PAPIER !</h2>
+            <p>Passe au digital avec Rwej. Votre catalogue WhatsApp prêt en 24h.</p>
+        </div>
+    </section>
+
+    <section class="services-section" id="services">
+        <div class="section-header">
+            <h2>الخدمات التي نقدمها لزبنائنا</h2>
+            <p>حلول مدروسة ومصممة خصيصاً لرفع مردودية وحجم مبيعات محلك التجاري</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div>
+                    <div class="card-icon"><i class="fa-solid fa-store"></i></div>
+                    <h3>1. موقع كاطالوج + طلب واتساب</h3>
+                    <p>هادي هي الفتيرينة ديال محلك فالأنترنيت، كنستفو ليك السلعة كاملة بالتصاور والثمن، الزبون كيفلب والمحتاج شي حاجة كيضغط على زر كوموندي وتجيك الرسالة فواتساب واجدة بالسمية ديال المنتج والثمن بلا تمارة. أهاد الكاطالوج كيهنيك من "صيغط ليا تصويرة" و "بشحال هادي" و "واش كاينة هادي".</p>
+                </div>
+                <div class="price-box">
+                    <span class="price-title">الثمن الإجمالي</span>
+                    <span class="price-amount">500 <span>درهم</span></span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div>
+                    <div class="card-icon"><i class="fa-solid fa-qrcode"></i></div>
+                    <h3>2. موقع المينو أو QR Menu</h3>
+                    <p>هادي خاصة بالقهاوي والسناكات، كنصايبو ليك صورة فيها المينو كامل ديالك، كنطبعو ليك QR كود كيتلصق فالطوابل، الزبون كيجي كيسكاني بالتيلفون ديالو وكيشوف المينو بدون عناء أو كتحط رابط ديال الصفحة لي عندي نصاوبو ليك فشي موقع تواصل أهو كاعدي ابقاو الناس يكمنديو من بعيد. أهاد QR Menu كيهنيك من كل مرة تبقا تطبع لوراق، أو كيزيد ليك الكليان.</p>
+                </div>
+                <div class="price-box">
+                    <span class="price-title">الثمن الإجمالي</span>
+                    <span class="price-amount">500 <span>درهم</span></span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div>
+                    <div class="card-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <h3>3. كاطالوج واتساب السريع</h3>
+                    <p>هادي هي أبسط وأرخص نسخة بحال لي فالسيت ديمو لي صايبت ليك، صفحة وحدة خفيفة فيها 6 حتى ل 8 ديال المنتجات الأكثر مبيعا عندك. الهدف ديالها ماشي تعرض كلشي، الهدف تجيب ليك زبناء جداد من كوكل.</p>
+                </div>
+                <div class="price-box">
+                    <span class="price-title">الثمن الإجمالي</span>
+                    <span class="price-amount">350 <span>درهم</span></span>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div>
+                    <div class="card-icon"><i class="fa-solid fa-link"></i></div>
+                    <h3>4. صفحة Link Bio</h3>
+                    <p>بلاصة ماتحط غير رابط واتساب فالبايو ديال انستغرام، كنصايبو ليك صفحة وحدة زوينة فيها صورتك + سميت المحل + تشوف الكاطالوج د الواتساب ديالي + صفحتي فايسبوك + موقع المحل على الخريطة.</p>
+                </div>
+                <div class="price-box">
+                    <span class="price-title">الثمن الإجمالي</span>
+                    <span class="price-amount">350 <span>درهم</span></span>
+                </div>
+            </div>
+
+            <div class="service-card highlighted">
+                <div>
+                    <div class="card-icon"><i class="fa-solid fa-rectangle-ad"></i></div>
+                    <h3>5. إطلاق وبرمجة الإعلانات الممولة</h3>
+                    <p>كنطلقوا ليك إعلانات احترافية ومستهدفة على فيسبوك، إنستغرام، وتيك توك باش نوصلوا المنتجات ديالك لآلاف الكليان المهتمين فمدينتك. مع تركيب كود الـ Pixel فالموقع ديالك باش نحسبوا بدقة شحال ديال الناس دخلوا وتواصلوا معاك ونضمنوا ليك أعلى نسبة مبيعات بأقل تكلفة.</p>
+                </div>
+                <div class="price-box">
+                    <span class="price-title">تبدأ الباقات من</span>
+                    <span class="price-amount">400 <span>درهم</span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-socials">
+            <a href="https://www.instagram.com/rwej.ma?igsh=MXNtOGFtZjZuMHZraQ==" class="social-icon insta" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://wa.me/212681127369" class="social-icon" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+        <p>&copy; 2026 Rwej.ma | جميع الحقوق محفوظة لـ روج.</p>
+    </footer>
+
+    <a href="https://wa.me/212681127369" class="whatsapp-float" target="_blank">
+        <div class="ping"></div>
+        <div class="radar-pulse"></div>
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+</body>
+</html>
