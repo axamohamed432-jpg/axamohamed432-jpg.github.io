@@ -1,0 +1,523 @@
+```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rwej - روج | باقات العروض الرقمية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-main: #0b132b;
+            --bg-surface: #1c2541;
+            --bg-card: #222e50;
+            --primary: #3a86ff;
+            --primary-glow: rgba(58, 134, 255, 0.4);
+            --accent: #00f5d4;
+            --accent-glow: rgba(0, 245, 212, 0.3);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* توهج الخلفية الإبداعي المتحرك */
+        .bg-glows {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .glow-1 {
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(58,134,255,0.15) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+        }
+        .glow-2 {
+            position: absolute;
+            top: 40%;
+            right: -10%;
+            width: 45vw;
+            height: 45vw;
+            background: radial-gradient(circle, rgba(0,245,212,0.1) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+        }
+
+        /* هيدر التنقل العصري */
+        header {
+            background: rgba(28, 37, 65, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 15px 8%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+        .logo span {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* واجهة الـ Hero مع الصورة */
+        .hero {
+            padding: 150px 5% 40px 5%;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-logo-container {
+            margin-bottom: 20px;
+        }
+
+        .hero-logo {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 24px;
+            border: 2px solid rgba(58, 134, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px var(--primary-glow);
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        .hero h1 span {
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* شبكة الباقات الاحترافية بنفس الألوان */
+        .packages-section {
+            padding: 40px 8% 80px 8%;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .service-card {
+            background: var(--bg-surface);
+            border: 1px solid rgba(0, 245, 212, 0.15);
+            border-radius: 24px;
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(58, 134, 255, 0.25);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        /* تمييز خاص لباك VIP الذهبي */
+        .service-card.vip-highlight {
+            background: linear-gradient(145deg, #1c2541, #242216);
+            border: 1px solid #ffd700;
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.05);
+        }
+        .service-card.vip-highlight .card-icon {
+            background: rgba(255, 215, 0, 0.1);
+            color: #ffd700;
+        }
+        .service-card.vip-highlight .price-amount {
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .card-icon {
+            width: 65px;
+            height: 65px;
+            background: rgba(58, 134, 255, 0.08);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-bottom: 25px;
+            transition: transform 0.3s;
+        }
+        .service-card:hover .card-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            flex-grow: 1;
+        }
+
+        .service-card p strong {
+            color: #fff;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .price-box {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .price-title {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .price-details {
+            text-align: left;
+        }
+        .old-price {
+            text-decoration: line-through;
+            color: #ef4444;
+            font-size: 0.95rem;
+            display: block;
+            opacity: 0.8;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+        .price-amount {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+        .price-amount span {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-right: 3px;
+        }
+
+        /* منطقة الـ CTA السفلية الخاصة بالباكات */
+        .package-cta {
+            text-align: center;
+            margin-top: 60px;
+            padding: 40px 30px;
+            background: rgba(58, 134, 255, 0.05);
+            border-radius: 24px;
+            border: 1px dashed var(--primary);
+        }
+        .package-cta p {
+            font-size: 1.25rem;
+            color: #fff;
+            margin-bottom: 25px;
+            font-weight: 600;
+            line-height: 1.8;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #1d4ed8);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(58, 134, 255, 0.4);
+        }
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 25px rgba(58, 134, 255, 0.6);
+        }
+
+        /* الفوتر المتناسق */
+        footer {
+            background: #060b18;
+            padding: 50px 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+        }
+        .footer-socials {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        .social-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.3rem;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .social-icon:hover {
+            background: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 5px 15px var(--primary-glow);
+        }
+        .social-icon.insta:hover {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+
+        /* الزر العائم للواتساب بتأثير النبض الرادار */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background-color: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 32px;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1) rotate(8deg);
+            background-color: #20ba5a;
+        }
+        .whatsapp-float .radar-pulse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #25d366;
+            opacity: 0.4;
+            z-index: -1;
+            animation: radar 1.6s infinite;
+        }
+
+        @keyframes radar {
+            0% { transform: scale(1); opacity: 0.4; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.1rem; }
+            .nav-links { display: none; }
+            .packages-section { padding: 40px 4% 60px 4%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glows">
+        <div class="glow-1"></div>
+        <div class="glow-2"></div>
+    </div>
+
+    <header>
+        <a href="#" class="logo">🚀 <span>Rwej.ma</span></a>
+        <ul class="nav-links">
+            <li><a href="#packages">باقات العروض</a></li>
+            <li><a href="https://www.instagram.com/rwej.ma?igsh=MXNtOGFtZjZuMHZraQ==" target="_blank">إنستغرام</a></li>
+            <li><a href="https://wa.me/212728635301" target="_blank">اتصل بنا مباشر</a></li>
+        </ul>
+    </header>
+
+    <section class="hero">
+        <div class="hero-logo-container">
+            <img src="1000005380.webp" alt="Rwej.ma Logo" class="hero-logo">
+        </div>
+        <h1>اختر الباقة المناسبة <span>لإشعاع مشروعك</span></h1>
+        <p>عروض متكاملة ومدروسة خصيصاً لتطوير محلك التجاري وزيادة مبيعاتك بأفضل الأثمنة في السوق</p>
+    </section>
+
+    <section class="packages-section" id="packages">
+        <div class="services-grid">
+            
+            <!-- 1. باك الـ VIP -->
+            <div class="service-card vip-highlight">
+                <div>
+                    <div class="card-icon">👑</div>
+                    <h3>1. باك الـ VIP (الخدمة الشاملة لزيادة المبيعات)</h3>
+                    <p><strong>شنو فيه:</strong> موقع كاطالوج احترافي متكامل + إطلاق وبرمجة إعلانات ممولة ومستهدفة (فيسبوك/أنستغرام/تيك توك) باش نجيبو ليك مبيعات من مدينتك بأقل تكلفة + صفحة Link Bio للأنستغرام + إعداد حساب Google Business فابور كهدية.</p>
+                </div>
+                <div class="price-box">
+                    <span class="price-title">الثمن الإجمالي</span>
+                    <div class="price-details">
+                        <span class="old-price">1400 درهم</span>
+                        <span class="price-amount">1099 <span>درهم</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. باك التاجر -->
+            <div class="service-card">
+                <div>
+                    <div class="card-icon">🛍️</div>
+                    <h3>2. باك "التاجر" (للمحلات التجارية وسلعة أونلاين)</h3>
+                    <p><strong>شنو فيه:</strong> موقع كاطالوج متكامل + زر الطلب ديريكت للواتساب ديالك (باش تهنى من كثرة الأسئلة) + صفحة Link Bio للأنستغرام + إعداد حساب Google Business باش تبان فخريطة جوجل.</p>
+                </div>
+                <div class="price-box">
+                    <span class="price-title">الثمن الإجمالي</span>
+                    <div class="price-details">
+                        <span class="old-price">1000 درهم</span>
+                        <span class="price-amount">799 <span>درهم</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. باك المطاعم والقهاوي -->
+            <div class="service-card">
+                <div>
+                    <div class="card-icon">🍔</div>
+                    <h3>3. باك "المطاعم والقهاوي" (خاص بالسناكات والمقاهي)</h3>
+                    <p><strong>شنو فيه:</strong> موقع المينو الإلكتروني (QR Menu) كيتربط بالتيلفون (تهنى من طباعة المينويات د الورق) + إعداد حساب Google Business متكامل باش أي واحد قلب فجوجل يجي عندك بـ GPS + صفحة Link Bio.</p>
+                </div>
+                <div class="price-box">
+                    <span class="price-title">الثمن الإجمالي</span>
+                    <div class="price-details">
+                        <span class="old-price">1000 درهم</span>
+                        <span class="price-amount">750 <span>درهم</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. باك البداية -->
+            <div class="service-card">
+                <div>
+                    <div class="card-icon">📦</div>
+                    <h3>4. باك "البداية" (للمشاريع الصغرى والمبتدئين)</h3>
+                    <p><strong>شنو فيه:</strong> كاطالوج واتساب السريع (نسخة خفيفة ومفتوحة لسلعتك) + تسجيل المحل فخريطة Google Business باش الناس لي قراب ليك يلقاوك بسهولة.</p>
+                </div>
+                <div class="price-box">
+                    <span class="price-title">الثمن الإجمالي</span>
+                    <div class="price-details">
+                        <span class="old-price">500 درهم</span>
+                        <span class="price-amount">400 <span>درهم</span></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="package-cta">
+            <p>💬 شنو هو الباك لي بان ليك غيخدم للبيزنس ديالك ونبداو فيه الخدمة؟<br>صيفط ليا غير السمية أو الرقم ديال الباك، وإذا عندك أي تساؤل مرحبا بك!</p>
+            <a href="https://wa.me/212728635301" class="btn btn-primary" target="_blank">
+                <i class="fa-brands fa-whatsapp"></i> تواصل معنا واطلب باقتك الآن
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-socials">
+            <a href="https://www.instagram.com/rwej.ma?igsh=MXNtOGFtZjZuMHZraQ==" class="social-icon insta" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://wa.me/212728635301" class="social-icon" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+        <p>&copy; 2026 Rwej.ma | جميع الحقوق محفوظة لـ لـ روج.</p>
+    </footer>
+
+    <a href="https://wa.me/212728635301" class="whatsapp-float" target="_blank">
+        <div class="ping"></div>
+        <div class="radar-pulse"></div>
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+</body>
+</html>
+
+```
